@@ -43,16 +43,12 @@ public class TaskController {
 	}
 
 	@GetMapping
-	public Page<TaskDto> readAll(@RequestParam(required = false) String descricao,
+	public Page<TaskDto> readAll(@RequestParam(defaultValue = "", required = false) String description,
+								 @RequestParam(defaultValue = "false", required = false) Boolean concluded,
 								 @PageableDefault(sort = "creationDate", direction = Direction.ASC, page = 0, size = 20) Pageable paginator) {
-		
-		if (descricao == null) {
-			Page<Task> tasks = this.taskRepository.findAll(paginator);
-			return TaskDto.createTaskDtoPage(tasks);
-		} else {
-			Page<Task> tasks = this.taskRepository.findByDescriptionContaining(descricao, paginator);
-			return TaskDto.createTaskDtoPage(tasks);
-		}
+
+		Page<Task> tasks = this.taskRepository.findByDescriptionContainingAndConcluded(description, concluded, paginator);
+		return TaskDto.createTaskDtoPage(tasks);
 	}
 	
 	@PostMapping
@@ -86,7 +82,7 @@ public class TaskController {
 				}).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
-	@PutMapping("/{id}/conclude") //A escolha do put foi devido o metodo put é indepotente e unsafe.
+	@PutMapping("/{id}/conclude") //A escolha do put foi devido o metodo ser indepotente e unsafe.
 	@Transactional
 	public ResponseEntity<TaskDetailsDto> conclude(@PathVariable Long id) {
 

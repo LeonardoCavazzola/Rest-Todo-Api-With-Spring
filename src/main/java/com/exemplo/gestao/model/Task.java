@@ -40,10 +40,12 @@ public class Task {
      * @return Task
      */
     public Task conclude(){
-        this.changeDate = LocalDateTime.now();
-        this.conclusionDate = LocalDateTime.now();
-        this.concluded = true;
-        return (this);
+        if (!concluded) {
+            this.changeDate = LocalDateTime.now();
+            this.conclusionDate = LocalDateTime.now();
+            this.concluded = true;
+        }
+        return this;
     }
 
 }
