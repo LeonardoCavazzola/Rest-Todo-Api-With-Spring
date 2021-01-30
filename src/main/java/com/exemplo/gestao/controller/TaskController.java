@@ -1,20 +1,17 @@
 package com.exemplo.gestao.controller;
 
 import java.net.URI;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import com.exemplo.gestao.controller.dto.TaskDetalhesDto;
+import com.exemplo.gestao.controller.dto.TaskDetailsDto;
 import com.exemplo.gestao.controller.dto.TaskDto;
-import com.exemplo.gestao.controller.form.TaskAtualizacaoForm;
+import com.exemplo.gestao.controller.form.TaskUpdateForm;
 import com.exemplo.gestao.controller.form.TaskForm;
-import com.exemplo.gestao.modelo.Task;
+import com.exemplo.gestao.model.Task;
 import com.exemplo.gestao.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -39,9 +36,9 @@ public class TaskController {
 	private TaskRepository taskRepository;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<TaskDetalhesDto> readOne(@PathVariable Long id) {
+	public ResponseEntity<TaskDetailsDto> readOne(@PathVariable Long id) {
 		return this.taskRepository.findById(id)
-				.map(task -> ResponseEntity.ok(new TaskDetalhesDto(task)))
+				.map(task -> ResponseEntity.ok(new TaskDetailsDto(task)))
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
@@ -60,20 +57,20 @@ public class TaskController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<TaskDetalhesDto> create(@RequestBody @Valid TaskForm taskForm, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<TaskDetailsDto> create(@RequestBody @Valid TaskForm taskForm, UriComponentsBuilder uriBuilder) {
 		Task task = taskForm.createNewTask(this.taskRepository);
 		
 		URI uri = uriBuilder.path("/tasks/{id}").buildAndExpand(task.getId()).toUri();
-		return ResponseEntity.created(uri).body(new TaskDetalhesDto(task));
+		return ResponseEntity.created(uri).body(new TaskDetailsDto(task));
 	}
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<TaskDetalhesDto> update(@PathVariable Long id, @RequestBody @Valid TaskAtualizacaoForm taskAtualizacaoForm) {
+	public ResponseEntity<TaskDetailsDto> update(@PathVariable Long id, @RequestBody @Valid TaskUpdateForm taskUpdateForm) {
 
 		return this.taskRepository.findById(id)
 				.map(task -> {
-					TaskDetalhesDto dto = new TaskDetalhesDto(taskAtualizacaoForm.update(task));
+					TaskDetailsDto dto = new TaskDetailsDto(taskUpdateForm.update(task));
 					return ResponseEntity.ok(dto);
 				}).orElseGet(() -> ResponseEntity.notFound().build());
 	}

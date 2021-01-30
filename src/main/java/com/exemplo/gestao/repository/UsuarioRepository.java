@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.exemplo.gestao.modelo.Usuario;
+import com.exemplo.gestao.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	

@@ -47,10 +47,10 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 
-				//.antMatchers(HttpMethod.GET, "/cidades").permitAll()
-				//.antMatchers(HttpMethod.GET, "/cidades/*").permitAll()
-				//.antMatchers(HttpMethod.POST, "/cidades").permitAll()
-				//.antMatchers(HttpMethod.PUT, "/cidades/*").permitAll()
+				//.antMatchers(HttpMethod.GET, "/tasks").permitAll()
+				//.antMatchers(HttpMethod.GET, "/tasks/*").permitAll()
+				//.antMatchers(HttpMethod.POST, "/tasks").permitAll()
+				//.antMatchers(HttpMethod.PUT, "/tasks/*").permitAll()
 
 				.antMatchers(HttpMethod.POST, "/auth").permitAll()
 				.anyRequest().authenticated()

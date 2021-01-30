@@ -1,11 +1,11 @@
 package com.exemplo.gestao.config.validacao;
 
-public class ErroDeFormularioDto {
+public class FormErrorDto {
 	
 	private String campo;
 	private String erro;
 	
-	public ErroDeFormularioDto(String campo, String erro) {
+	public FormErrorDto(String campo, String erro) {
 		this.campo = campo;
 		this.erro = erro;
 	}
@@ -13,7 +13,6 @@ public class ErroDeFormularioDto {
 	public String getCampo() {
 		return campo;
 	}
-
 	public String getErro() {
 		return erro;
 	}

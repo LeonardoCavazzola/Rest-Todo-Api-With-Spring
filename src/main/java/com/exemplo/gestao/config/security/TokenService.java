@@ -2,7 +2,7 @@ package com.exemplo.gestao.config.security;
 
 import java.util.Date;
 
-import com.exemplo.gestao.modelo.Usuario;
+import com.exemplo.gestao.model.Usuario;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;

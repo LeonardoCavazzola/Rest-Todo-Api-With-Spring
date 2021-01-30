@@ -1,4 +1,4 @@
-package com.exemplo.gestao.modelo;
+package com.exemplo.gestao.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,9 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@Getter
+@Setter
 @Entity
 public class Usuario implements UserDetails {
 
@@ -21,12 +25,12 @@ public class Usuario implements UserDetails {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
+	private String name;
 	private String email;
-	private String senha;
+	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Perfil> perfis = new ArrayList<>();
+	private List<Profile> perfis = new ArrayList<>();
 
 	@Override
 	public int hashCode() {
@@ -53,38 +57,6 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.perfis;
@@ -92,7 +64,7 @@ public class Usuario implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return this.senha;
+		return this.password;
 	}
 
 	@Override

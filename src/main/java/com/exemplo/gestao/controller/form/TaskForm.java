@@ -1,6 +1,6 @@
 package com.exemplo.gestao.controller.form;
 
-import com.exemplo.gestao.modelo.Task;
+import com.exemplo.gestao.model.Task;
 import com.exemplo.gestao.repository.TaskRepository;
 import lombok.Setter;
 

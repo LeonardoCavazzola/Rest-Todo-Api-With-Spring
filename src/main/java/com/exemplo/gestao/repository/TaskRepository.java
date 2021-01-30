@@ -1,6 +1,6 @@
 package com.exemplo.gestao.repository;
 
-import com.exemplo.gestao.modelo.Task;
+import com.exemplo.gestao.model.Task;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

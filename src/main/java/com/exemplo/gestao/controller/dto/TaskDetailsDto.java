@@ -1,12 +1,12 @@
 package com.exemplo.gestao.controller.dto;
 
-import com.exemplo.gestao.modelo.Task;
+import com.exemplo.gestao.model.Task;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class TaskDetalhesDto {
+public class TaskDetailsDto {
 
 	private String description;
 	private Boolean concluded;
@@ -14,7 +14,7 @@ public class TaskDetalhesDto {
 	private LocalDateTime creationDate;
 	private LocalDateTime changeDate;
 
-	public TaskDetalhesDto(Task task) {
+	public TaskDetailsDto(Task task) {
 		this.description = task.getDescription();
 		this.concluded = task.getConcluded();
 		this.conclusionDate = task.getConclusionDate();

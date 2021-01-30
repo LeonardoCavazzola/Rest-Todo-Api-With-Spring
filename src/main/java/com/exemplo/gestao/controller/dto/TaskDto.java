@@ -1,6 +1,6 @@
 package com.exemplo.gestao.controller.dto;
 
-import com.exemplo.gestao.modelo.Task;
+import com.exemplo.gestao.model.Task;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 

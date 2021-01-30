@@ -9,10 +9,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class LoginForm {
 
 	private String email;
-	private String senha;
+	private String password;
 
 	public UsernamePasswordAuthenticationToken toUsernamePasswordAuthenticationToken() {
-		return new UsernamePasswordAuthenticationToken(this.email, this.senha);
+		return new UsernamePasswordAuthenticationToken(this.email, this.password);
 	}
 
 }

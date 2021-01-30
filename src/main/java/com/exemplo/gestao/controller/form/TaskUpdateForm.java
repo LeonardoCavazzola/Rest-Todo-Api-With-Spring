@@ -1,6 +1,6 @@
 package com.exemplo.gestao.controller.form;
 
-import com.exemplo.gestao.modelo.Task;
+import com.exemplo.gestao.model.Task;
 
 import lombok.Setter;
 import javax.validation.constraints.NotBlank;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Setter
-public class TaskAtualizacaoForm {
+public class TaskUpdateForm {
 	@NotNull
 	@NotBlank
 	private String description;
