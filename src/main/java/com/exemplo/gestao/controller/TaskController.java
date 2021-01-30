@@ -83,6 +83,17 @@ public class TaskController {
 				.map(task -> {
 					this.taskRepository.delete(task);
 					return ResponseEntity.ok().build();
-				}).orElseGet(()->ResponseEntity.notFound().build());
+				}).orElseGet(() -> ResponseEntity.notFound().build());
+	}
+
+	@PutMapping("/{id}/conclude") //A escolha do put foi devido o metodo put é indepotente e unsafe.
+	@Transactional
+	public ResponseEntity<TaskDetailsDto> conclude(@PathVariable Long id) {
+
+		return this.taskRepository.findById(id)
+				.map(task -> {
+					TaskDetailsDto dto = new TaskDetailsDto(task.conclude());
+					return ResponseEntity.ok(dto);
+				}).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 }
