@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    Page<Task> findByDescriptionContaining(String description, Pageable pageable);
     Page<Task> findByDescriptionContainingAndConcluded(String description, Boolean concluded, Pageable pageable);
 }

@@ -2,11 +2,11 @@ package com.exemplo.gestao.controller.dto;
 
 import com.exemplo.gestao.model.Task;
 import lombok.Getter;
-
+import org.springframework.hateoas.RepresentationModel;
 import java.time.LocalDateTime;
 
 @Getter
-public class TaskDetailsDto {
+public class TaskDetailsDto extends RepresentationModel<TaskDetailsDto> {
 
 	private String description;
 	private Boolean concluded;
