@@ -48,4 +48,18 @@ public class Task {
         return this;
     }
 
+    /**
+     * Desmarca essa task como concluida e retorna essa mesma task.
+     * Caso essa task não esteja concluida, apenas retorna.
+     *
+     * @return Task
+     */
+    public Task deconclude() {
+        if (concluded) {
+            this.changeDate = LocalDateTime.now();
+            this.conclusionDate = null;
+            this.concluded = false;
+        }
+        return this;
+    }
 }
