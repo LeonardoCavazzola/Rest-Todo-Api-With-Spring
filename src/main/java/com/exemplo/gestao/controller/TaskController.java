@@ -36,7 +36,7 @@ public class TaskController {
 	private TaskRepository taskRepository;
 
 	/**
-	 * Endpoint para obter as informações completas de uma Task.
+	 * Endpoint para obter as informações completas de uma Task especifica.
 	 *
 	 * @param id
 	 * @return ResponseEntity
@@ -57,11 +57,27 @@ public class TaskController {
 	 * @return Page
 	 */
 	@GetMapping
-	public Page<TaskDto> readAll(@RequestParam(defaultValue = "", required = false) String description,
-								 @RequestParam(defaultValue = "false", required = false) Boolean concluded,
+	public Page<TaskDto> readAll(@RequestParam(required = false) String description,
+								 @RequestParam(required = false) Boolean concluded,
 								 @PageableDefault(sort = "creationDate", direction = Direction.ASC, page = 0, size = 20) Pageable paginator) {
 
-		Page<Task> tasks = this.taskRepository.findByDescriptionContainingAndConcluded(description, concluded, paginator); //Procura pelas tasks de acordo com os parametros.
+		Page<Task> tasks;
+		if(description == null){
+			if(concluded == null){ //Caso description e concluded são null.
+				tasks = this.taskRepository.findAll(paginator);
+			}
+			else{ //Caso description é null e concluded não.
+				tasks = this.taskRepository.findByConcluded(concluded, paginator);
+			}
+		}
+		else{
+			if(concluded == null){ //Caso description não é null e concluded é null.
+				tasks = this.taskRepository.findByDescriptionContaining(description, paginator);
+			}
+			else{ //Caso description e concluded não são null.
+				tasks = this.taskRepository.findByDescriptionContainingAndConcluded(description, concluded, paginator);
+			}
+		}
 		return TaskDto.createTaskDtoPage(tasks); //Converte para, e retorna uma pagina de TaskDto.
 	}
 
