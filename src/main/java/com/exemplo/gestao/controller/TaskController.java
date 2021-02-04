@@ -35,72 +35,118 @@ public class TaskController {
 	@Autowired
 	private TaskRepository taskRepository;
 
+	/**
+	 * Endpoint para obter as informações completas de uma Task.
+	 *
+	 * @param id
+	 * @return ResponseEntity
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<TaskDetailsDto> readOne(@PathVariable Long id) {
 		return this.taskRepository.findById(id)
-				.map(task -> ResponseEntity.ok(new TaskDetailsDto(task)))
-				.orElseGet(() -> ResponseEntity.notFound().build());
+				.map(task -> ResponseEntity.ok(new TaskDetailsDto(task))) //Se essa id existe, retorna uma ResponseEntity<TaskDetailsDto> com codigo 200(ok).
+				.orElseGet(() -> ResponseEntity.notFound().build()); //Se não existe, retorna uma ResponseEntity com codigo 404(not found).
 	}
 
+	/**
+	 * Endpoint para obter as informações resumidas de todas as Task que correspondem aos filtros.
+	 *
+	 * @param description
+	 * @param concluded
+	 * @param paginator
+	 * @return Page
+	 */
 	@GetMapping
 	public Page<TaskDto> readAll(@RequestParam(defaultValue = "", required = false) String description,
 								 @RequestParam(defaultValue = "false", required = false) Boolean concluded,
 								 @PageableDefault(sort = "creationDate", direction = Direction.ASC, page = 0, size = 20) Pageable paginator) {
 
-		Page<Task> tasks = this.taskRepository.findByDescriptionContainingAndConcluded(description, concluded, paginator);
-		return TaskDto.createTaskDtoPage(tasks);
+		Page<Task> tasks = this.taskRepository.findByDescriptionContainingAndConcluded(description, concluded, paginator); //Procura pelas tasks de acordo com os parametros.
+		return TaskDto.createTaskDtoPage(tasks); //Converte para, e retorna uma pagina de TaskDto.
 	}
-	
+
+	/**
+	 * Endpoint para cadastrar novas Tasks.
+	 *
+	 * @param taskForm
+	 * @param uriBuilder
+	 * @return ResponseEntity
+	 */
 	@PostMapping
 	@Transactional
 	public ResponseEntity<TaskDetailsDto> create(@RequestBody @Valid TaskForm taskForm, UriComponentsBuilder uriBuilder) {
-		Task task = taskForm.createNewTask(this.taskRepository);
+		Task task = taskForm.createNewTask(this.taskRepository); //Cria e salva uma task com as informações enviadas no form.
 		
-		URI uri = uriBuilder.path("/tasks/{id}").buildAndExpand(task.getId()).toUri();
-		return ResponseEntity.created(uri).body(new TaskDetailsDto(task));
+		URI uri = uriBuilder.path("/tasks/{id}").buildAndExpand(task.getId()).toUri(); //Cria a URI para o objeto Task criado.
+		return ResponseEntity.created(uri).body(new TaskDetailsDto(task)); //Retorna uma ResponseEntity<TaskDetailsDto> com codigo 201(Created) e location de acordo com o URI criado.
 	}
-	
+
+	/**
+	 * Endpoint para alterar uma Tasks especifica.
+	 *
+	 * @param id
+	 * @param taskUpdateForm
+	 * @return ResponseEntity
+	 */
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<TaskDetailsDto> update(@PathVariable Long id, @RequestBody @Valid TaskUpdateForm taskUpdateForm) {
 
 		return this.taskRepository.findById(id)
-				.map(task -> {
-					TaskDetailsDto dto = new TaskDetailsDto(taskUpdateForm.update(task));
-					return ResponseEntity.ok(dto);
-				}).orElseGet(() -> ResponseEntity.notFound().build());
+				.map(task -> { //Se essa id existe
+					TaskDetailsDto dto = new TaskDetailsDto(taskUpdateForm.update(task)); //Atualiza as informações
+					return ResponseEntity.ok(dto); //Retorna uma ResponseEntity<TaskDetailsDto> com codigo 200(ok).
+				}).orElseGet(() -> ResponseEntity.notFound().build()); //Se não existe, retorna uma ResponseEntity com codigo 404(not found).
 	}
-	
+
+	/**
+	 * Endpoint para deletar uma Tasks especifica.
+	 *
+	 * @param id
+	 * @return ResponseEntity
+	 */
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 
 		return this.taskRepository.findById(id)
-				.map(task -> {
-					this.taskRepository.delete(task);
-					return ResponseEntity.ok().build();
-				}).orElseGet(() -> ResponseEntity.notFound().build());
+				.map(task -> { //Se essa id existe
+					this.taskRepository.delete(task); //Deleta a task.
+					return ResponseEntity.ok().build(); //Retorna uma ResponseEntity vazia com codigo 200(ok).
+				}).orElseGet(() -> ResponseEntity.notFound().build()); //Se não existe, retorna uma ResponseEntity com codigo 404(not found).
 	}
 
+	/**
+	 * Endpoint para marcar uma Tasks especifica como concluida.
+	 *
+	 * @param id
+	 * @return ResponseEntity
+	 */
 	@PutMapping("/{id}/conclude") //A escolha do put foi devido o metodo ser indepotente e unsafe.
 	@Transactional
 	public ResponseEntity<TaskDetailsDto> conclude(@PathVariable Long id) {
 
 		return this.taskRepository.findById(id)
-				.map(task -> {
-					TaskDetailsDto dto = new TaskDetailsDto(task.conclude());
-					return ResponseEntity.ok(dto);
-				}).orElseGet(() -> ResponseEntity.notFound().build());
+				.map(task -> { //Se essa id existe
+					TaskDetailsDto dto = new TaskDetailsDto(task.conclude()); //Marca a task como concluida.
+					return ResponseEntity.ok(dto); //Retorna uma ResponseEntity<TaskDetailsDto> com codigo 200(ok).
+				}).orElseGet(() -> ResponseEntity.notFound().build()); //Se não existe, retorna uma ResponseEntity com codigo 404(not found).
 	}
 
+	/**
+	 * Endpoint para desmarcar a conclusao de uma Tasks especifica.
+	 *
+	 * @param id
+	 * @return ResponseEntity
+	 */
 	@PutMapping("/{id}/deconclude") //A escolha do put foi devido o metodo ser indepotente e unsafe.
 	@Transactional
 	public ResponseEntity<TaskDetailsDto> deconclude(@PathVariable Long id) {
 
 		return this.taskRepository.findById(id)
-				.map(task -> {
-					TaskDetailsDto dto = new TaskDetailsDto(task.deconclude());
-					return ResponseEntity.ok(dto);
-				}).orElseGet(() -> ResponseEntity.notFound().build());
+				.map(task -> { //Se essa id existe
+					TaskDetailsDto dto = new TaskDetailsDto(task.deconclude()); //Marca a task como concluida.
+					return ResponseEntity.ok(dto); //Retorna uma ResponseEntity<TaskDetailsDto> com codigo 200(ok).
+				}).orElseGet(() -> ResponseEntity.notFound().build()); //Se não existe, retorna uma ResponseEntity com codigo 404(not found).
 	}
 }
