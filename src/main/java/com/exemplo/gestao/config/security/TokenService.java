@@ -28,7 +28,7 @@ public class TokenService {
 		
 		return Jwts.builder()
 				.setIssuer("API gestao")
-				.setSubject(logado.getId().toString())
+				.setSubject(logado.getEmail())
 				.setIssuedAt(hoje)
 				.setExpiration(dataExpiracao)
 				.signWith(SignatureAlgorithm.HS256, secret)
