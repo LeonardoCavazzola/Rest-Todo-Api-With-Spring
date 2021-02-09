@@ -5,7 +5,7 @@ Api RESTful para aplicativo clássico de tarefas pendentes em que um usuário po
 ##  Histórias de usuários
 
 -    [x] O usuário pode inserir uma tarefa
--    [x] O usuário pode marcar uma tarefa como `concluíded` (concluida)
+-    [x] O usuário pode marcar uma tarefa como `concluded` (concluída)
 -    [x] O usuário pode remover uma tarefa
 -    [x] O usuário pode editar uma tarefa
 -    [x] O usuário pode ver uma lista com todas as tarefas concluídas
