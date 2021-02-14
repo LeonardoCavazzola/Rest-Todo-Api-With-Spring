@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,9 +59,10 @@ public class TaskController {
 	 * @return Page
 	 */
 	@GetMapping
-	public Page<TaskDto> readAll(@RequestParam(required = false) String description,
-								 @RequestParam(required = false) Boolean concluded,
-								 @PageableDefault(sort = "creationDate", direction = Direction.ASC, page = 0, size = 20) Pageable paginator) {
+	public PagedModel<EntityModel<TaskDto>> readAll(@RequestParam(required = false) String description,
+													@RequestParam(required = false) Boolean concluded,
+													@PageableDefault(sort = "creationDate", direction = Direction.ASC, page = 0, size = 20) Pageable paginator,
+													UriComponentsBuilder uriBuilder) {
 
 		Page<Task> tasks;
 		if(description == null){
@@ -78,7 +81,7 @@ public class TaskController {
 				tasks = this.taskRepository.findByDescriptionContainingAndConcluded(description, concluded, paginator);
 			}
 		}
-		return TaskDto.createTaskDtoPage(tasks); //Converte para, e retorna uma pagina de TaskDto.
+		return TaskDto.buildTaskDtoPage(tasks, uriBuilder); //Converte para, e retorna uma pagina com "HATEOAS" de TaskDto.
 	}
 
 	/**
@@ -138,7 +141,7 @@ public class TaskController {
 	 * @param id
 	 * @return ResponseEntity
 	 */
-	@PutMapping("/{id}/conclude") //A escolha do put foi devido o metodo ser indepotente e unsafe.
+	@PostMapping("/{id}/conclude")
 	@Transactional
 	public ResponseEntity<TaskDetailsDto> conclude(@PathVariable Long id) {
 
@@ -155,13 +158,13 @@ public class TaskController {
 	 * @param id
 	 * @return ResponseEntity
 	 */
-	@PutMapping("/{id}/deconclude") //A escolha do put foi devido o metodo ser indepotente e unsafe.
+	@DeleteMapping("/{id}/conclude")
 	@Transactional
 	public ResponseEntity<TaskDetailsDto> deconclude(@PathVariable Long id) {
 
 		return this.taskRepository.findById(id)
 				.map(task -> { //Se essa id existe
-					TaskDetailsDto dto = new TaskDetailsDto(task.deconclude()); //Marca a task como concluida.
+					TaskDetailsDto dto = new TaskDetailsDto(task.deconclude()); //Desmarca a task como concluida.
 					return ResponseEntity.ok(dto); //Retorna uma ResponseEntity<TaskDetailsDto> com codigo 200(ok).
 				}).orElseGet(() -> ResponseEntity.notFound().build()); //Se não existe, retorna uma ResponseEntity com codigo 404(not found).
 	}

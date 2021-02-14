@@ -23,12 +23,9 @@ public class TaskDetailsDto extends RepresentationModel<TaskDetailsDto> {
 		this.creationDate = task.getCreationDate();
 		this.changeDate = task.getChangeDate();
 
-		super.add(
-				TaskLink.self(task.getId()),
-				this.concluded ? TaskLink.deconclude(task.getId()) : TaskLink.conclude(task.getId()),
-				TaskLink.update(task.getId()),
-				TaskLink.delete(task.getId()),
-				TaskLink.readAll(null, null)
-		);
+		this.add(TaskLink.self(task.getId()))
+				.add(this.concluded ? TaskLink.deconclude(task.getId()) : TaskLink.conclude(task.getId()))
+				.add(TaskLink.update(task.getId()))
+				.add(TaskLink.delete(task.getId()));
 	}
 }

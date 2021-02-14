@@ -9,7 +9,7 @@ public class HomeDto extends RepresentationModel<TaskDetailsDto> {
 
     public HomeDto() {
         super.add(
-                TaskLink.readAll(null, null),
+                TaskLink.readAll(null, null, null),
                 TaskLink.create()
         );
     }

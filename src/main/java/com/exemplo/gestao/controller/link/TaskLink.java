@@ -3,6 +3,7 @@ package com.exemplo.gestao.controller.link;
 import com.exemplo.gestao.controller.TaskController;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class TaskLink {
 
@@ -18,6 +19,22 @@ public class TaskLink {
                     .slash(id)
                     .withSelfRel()
                     .withType("get");
+    }
+
+    /**
+     * Recebe a Id de uma task e retorna um link para o metodo readOne da TaskController.
+     *
+     * @param id
+     * @param rel
+     * @return Link
+     */
+    public static Link readOne(Long id, String rel){
+        return WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder
+                        .methodOn(TaskController.class)
+                        .readOne(id))
+                .withRel(rel)
+                .withType("get");
     }
 
     /**
@@ -40,15 +57,47 @@ public class TaskLink {
      *
      * @param description
      * @param concluded
+     * @param rel
      * @return Link
      */
-    public static Link readAll(String description, Boolean concluded){
+    public static Link readAll(String description, Boolean concluded, UriComponentsBuilder uriComponentsBuilder, String rel){
         return WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder
                         .methodOn(TaskController.class)
-                        .readAll(description, concluded, null))
+                        .readAll(description, concluded, null, uriComponentsBuilder))
+                .withRel(rel)
+                .withType("get");
+    }
+
+    /**
+     * Retorna um link para o metodo readAll da TaskController.
+     *
+     * @param description
+     * @param concluded
+     * @return Link
+     */
+    public static Link readAll(String description, Boolean concluded, UriComponentsBuilder uriComponentsBuilder){
+        return WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder
+                        .methodOn(TaskController.class)
+                        .readAll(description, concluded, null, uriComponentsBuilder))
                 .withRel("readAllTasks")
                 .withType("get");
+    }
+
+    /**
+     * Retorna um link para o metodo create da TaskController.
+     *
+     * @param rel
+     * @return Link
+     */
+    public static Link create(String rel){
+        return WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder
+                        .methodOn(TaskController.class)
+                        .create(null, null))
+                .withRel(rel)
+                .withType("post");
     }
 
     /**
@@ -63,6 +112,22 @@ public class TaskLink {
                         .create(null, null))
                 .withRel("createTask")
                 .withType("post");
+    }
+
+    /**
+     * Recebe a Id de uma task e retorna um link para o metodo update da TaskController.
+     *
+     * @param id
+     * @param rel
+     * @return Link
+     */
+    public static Link update(Long id, String rel){
+        return WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder
+                        .methodOn(TaskController.class)
+                        .update(id, null))
+                .withRel(rel)
+                .withType("put");
     }
 
     /**
@@ -84,6 +149,22 @@ public class TaskLink {
      * Recebe a Id de uma task e retorna um link para o metodo delete da TaskController.
      *
      * @param id
+     * @param rel
+     * @return Link
+     */
+    public static Link delete(Long id, String rel){
+        return WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder
+                        .methodOn(TaskController.class)
+                        .delete(id))
+                .withRel(rel)
+                .withType("delete");
+    }
+
+    /**
+     * Recebe a Id de uma task e retorna um link para o metodo delete da TaskController.
+     *
+     * @param id
      * @return Link
      */
     public static Link delete(Long id){
@@ -99,6 +180,22 @@ public class TaskLink {
      * Recebe a Id de uma task e retorna um link para o metodo conclude da TaskController.
      *
      * @param id
+     * @param rel
+     * @return Link
+     */
+    public static Link conclude(Long id, String rel){
+        return WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder
+                        .methodOn(TaskController.class)
+                        .conclude(id))
+                .withRel(rel)
+                .withType("post");
+    }
+
+    /**
+     * Recebe a Id de uma task e retorna um link para o metodo conclude da TaskController.
+     *
+     * @param id
      * @return Link
      */
     public static Link conclude(Long id){
@@ -107,7 +204,23 @@ public class TaskLink {
                         .methodOn(TaskController.class)
                         .conclude(id))
                 .withRel("concludeTask")
-                .withType("put");
+                .withType("post");
+    }
+
+    /**
+     * Recebe a Id de uma task e retorna um link para o metodo deconclude da TaskController.
+     *
+     * @param id
+     * @param rel
+     * @return Link
+     */
+    public static Link deconclude(Long id, String rel) {
+        return WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder
+                        .methodOn(TaskController.class)
+                        .deconclude(id))
+                .withRel(rel)
+                .withType("delete");
     }
 
     /**
@@ -122,6 +235,6 @@ public class TaskLink {
                         .methodOn(TaskController.class)
                         .deconclude(id))
                 .withRel("deconcludeTask")
-                .withType("put");
+                .withType("delete");
     }
 }
