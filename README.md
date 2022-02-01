@@ -12,3 +12,6 @@ Api RESTful para aplicativo clássico de tarefas pendentes em que um usuário po
 -    [x] O usuário pode ver uma lista com todas as tarefas ativas
 -    [x] O usuário pode ver a data em que criou a tarefa
 -    [x] O usuário pode ver a data em que concluiu a tarefa
+
+created in: 2021-Jan 
+updated in: 2022-Fev
