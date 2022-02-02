@@ -8,7 +8,7 @@ import org.springframework.hateoas.RepresentationModel;
 public class HomeResponse extends RepresentationModel<HomeResponse> {
 
     public HomeResponse() {
-        this.add(TaskLink.readAll(null, null));
+        this.add(TaskLink.readAll(null));
         this.add(TaskLink.create());
     }
 }
