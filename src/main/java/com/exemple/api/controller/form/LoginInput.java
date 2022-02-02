@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 @Getter
 @Setter
-public class LoginForm {
+public class LoginInput {
 
 	private String email;
 	private String password;
