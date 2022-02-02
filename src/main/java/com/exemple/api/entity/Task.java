@@ -38,6 +38,11 @@ public class Task {
         this.description = description;
     }
 
+    public Task update(Task right) {
+        this.description = right.description;
+        return this;
+    }
+
     /**
      * Marks this task as completed and returns that same task.
      * If this task is already completed, it just returns.

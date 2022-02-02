@@ -56,15 +56,14 @@ public class TaskLink {
      * Retorna um link para o metodo readAll da TaskController.
      *
      * @param description
-     * @param concluded
      * @param rel
      * @return Link
      */
-    public static Link readAll(String description, Boolean concluded, UriComponentsBuilder uriComponentsBuilder, String rel){
+    public static Link readAll(String description, String rel){
         return WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder
                         .methodOn(TaskController.class)
-                        .readAll(description, concluded, null, uriComponentsBuilder))
+                        .readAll(description, null))
                 .withRel(rel)
                 .withType("get");
     }
@@ -76,11 +75,11 @@ public class TaskLink {
      * @param concluded
      * @return Link
      */
-    public static Link readAll(String description, Boolean concluded, UriComponentsBuilder uriComponentsBuilder){
+    public static Link readAll(String description){
         return WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder
                         .methodOn(TaskController.class)
-                        .readAll(description, concluded, null, uriComponentsBuilder))
+                        .readAll(description, null))
                 .withRel("readAllTasks")
                 .withType("get");
     }
@@ -95,7 +94,7 @@ public class TaskLink {
         return WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder
                         .methodOn(TaskController.class)
-                        .create(null, null))
+                        .create(null))
                 .withRel(rel)
                 .withType("post");
     }
@@ -109,7 +108,7 @@ public class TaskLink {
         return WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder
                         .methodOn(TaskController.class)
-                        .create(null, null))
+                        .create(null))
                 .withRel("createTask")
                 .withType("post");
     }
