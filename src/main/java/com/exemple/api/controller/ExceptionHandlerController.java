@@ -1,6 +1,7 @@
 package com.exemple.api.controller;
 
 import com.exemple.api.controller.dto.InputExceptionResponse;
+import com.exemple.api.exception.EntityNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class ExceptionHandlerController {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<InputExceptionResponse> handle(MethodArgumentNotValidException exception) {
+    public List<InputExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
 
         return exception.getBindingResult()
                 .getFieldErrors()
@@ -32,5 +33,11 @@ public class ExceptionHandlerController {
                     String message = messageSource.getMessage(e, LocaleContextHolder.getLocale());
                     return new InputExceptionResponse(e.getField(), message);
                 }).collect(Collectors.toList());
+    }
+
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EntityNotFoundException.class)
+    public String handle(EntityNotFoundException exception) {
+        return exception.getMessage();
     }
 }
