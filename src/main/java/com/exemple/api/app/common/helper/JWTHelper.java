@@ -16,12 +16,12 @@ public class JWTHelper {
     @Value("${forum.jwt.secret}")
     private String secret;
 
-    public String generate(String subject) {
+    public String generate(Long subject) {
         Date today = new Date();
         Date expiration = new Date(today.getTime() + Long.parseLong(duration));
 
         return Jwts.builder()
-                .setSubject(subject)
+                .setSubject(subject.toString())
                 .setIssuedAt(today)
                 .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS256, secret)
