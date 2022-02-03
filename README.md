@@ -13,5 +13,58 @@ Api RESTful para aplicativo clássico de tarefas pendentes em que um usuário po
 -    [x] O usuário pode ver a data em que criou a tarefa
 -    [x] O usuário pode ver a data em que concluiu a tarefa
 
-created in: 2021-Jan 
-updated in: 2022-Fev
+Created in: 2021-Jan  
+Updated in: 2022-Fev
+
+#### Home:
+```shell
+curl --location --request GET 'http://localhost:8080'
+```
+
+#### Create Task:
+```shell
+curl --location --request POST 'http://localhost:8080/tasks' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"description": "my task"
+}'
+```
+
+#### Read One Task:
+```shell
+curl --location --request GET 'http://localhost:8080/tasks/1'
+```
+
+#### Read All Tasks:
+```shell
+curl --location --request GET 'http://localhost:8080/tasks'
+```
+
+#### Conclude task:
+```shell
+curl --location --request PUT 'http://localhost:8080/tasks/1/conclude'
+```
+
+#### Deconclude Task:
+```shell
+curl --location --request PUT 'http://localhost:8080/tasks/1/deconclude'
+```
+
+#### Update task:
+```shell
+curl --location --request PUT 'http://localhost:8080/tasks/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"description":"my task 2"
+}'
+```
+
+#### User Login:
+```shell
+curl --location --request POST 'http://localhost:8080/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"email": "email@email.com",
+"password": "12345678"
+}'
+```
