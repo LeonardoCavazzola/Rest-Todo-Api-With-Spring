@@ -10,10 +10,10 @@ import java.util.Date;
 @Component
 public class JWTHelper {
 
-    @Value("${forum.jwt.duration}")
+    @Value("${app.jwt.duration}")
     private String duration;
 
-    @Value("${forum.jwt.secret}")
+    @Value("${app.jwt.secret}")
     private String secret;
 
     public String generate(Long subject) {

@@ -42,6 +42,7 @@ public class DevSecurityConfiguration extends WebSecurityConfigurerAdapter {
         //general:
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.csrf().disable();
+        http.headers().frameOptions().disable();
 
         //access management:
         http.authorizeRequests().anyRequest().permitAll();
