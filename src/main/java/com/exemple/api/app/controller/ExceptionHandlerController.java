@@ -1,6 +1,6 @@
 package com.exemple.api.app.controller;
 
-import com.exemple.api.app.controller.dto.InputExceptionResponse;
+import com.exemple.api.app.controller.response.InputExceptionResponse;
 import com.exemple.api.app.exception.EntityNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

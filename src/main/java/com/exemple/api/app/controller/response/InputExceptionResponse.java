@@ -1,4 +1,4 @@
-package com.exemple.api.app.controller.dto;
+package com.exemple.api.app.controller.response;
 
 import lombok.Getter;
 

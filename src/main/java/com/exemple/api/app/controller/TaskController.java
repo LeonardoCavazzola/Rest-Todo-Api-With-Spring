@@ -5,10 +5,10 @@ import java.net.URI;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import com.exemple.api.app.controller.dto.TaskResponse;
+import com.exemple.api.app.controller.response.TaskResponse;
 import com.exemple.api.domain.entity.Task;
-import com.exemple.api.app.controller.dto.TaskDetailsResponse;
-import com.exemple.api.app.controller.form.TaskInput;
+import com.exemple.api.app.controller.response.TaskDetailsResponse;
+import com.exemple.api.app.controller.input.TaskInput;
 import com.exemple.api.domain.service.TaskService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

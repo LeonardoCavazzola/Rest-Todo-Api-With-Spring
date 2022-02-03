@@ -1,4 +1,4 @@
-package com.exemple.api.app.controller.form;
+package com.exemple.api.app.controller.input;
 
 import com.exemple.api.domain.entity.Task;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.exemple.api.app.controller;
 
-import com.exemple.api.app.controller.form.LoginInput;
+import com.exemple.api.app.controller.input.LoginInput;
 import com.exemple.api.domain.service.LoginService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;

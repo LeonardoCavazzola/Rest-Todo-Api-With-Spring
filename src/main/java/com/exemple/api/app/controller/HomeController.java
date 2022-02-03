@@ -1,6 +1,6 @@
 package com.exemple.api.app.controller;
 
-import com.exemple.api.app.controller.dto.HomeResponse;
+import com.exemple.api.app.controller.response.HomeResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
